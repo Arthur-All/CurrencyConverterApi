@@ -1,0 +1,17 @@
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Infra.deps.json
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Infra.runtimeconfig.json
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Infra.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Infra.pdb
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Domain.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\bin\Debug\net6.0\CurrencyConversion.Domain.pdb
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.csproj.AssemblyReference.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.AssemblyInfoInputs.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.AssemblyInfo.cs
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.csproj.CoreCompileInputs.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.csproj.CopyComplete
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\refint\CurrencyConversion.Infra.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.pdb
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\CurrencyConversion.Infra.genruntimeconfig.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Infra\obj\Debug\net6.0\ref\CurrencyConversion.Infra.dll

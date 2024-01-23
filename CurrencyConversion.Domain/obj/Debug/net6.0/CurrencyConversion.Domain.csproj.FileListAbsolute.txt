@@ -1,0 +1,14 @@
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\bin\Debug\net6.0\CurrencyConversion.Domain.deps.json
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\bin\Debug\net6.0\CurrencyConversion.Domain.runtimeconfig.json
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\bin\Debug\net6.0\CurrencyConversion.Domain.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\bin\Debug\net6.0\CurrencyConversion.Domain.pdb
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.csproj.AssemblyReference.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.AssemblyInfoInputs.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.AssemblyInfo.cs
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.csproj.CoreCompileInputs.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\refint\CurrencyConversion.Domain.dll
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.pdb
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\CurrencyConversion.Domain.genruntimeconfig.cache
+C:\Users\arthu\OneDrive\Área de Trabalho\Desafio-Currency\CurrencyConversion.Domain\obj\Debug\net6.0\ref\CurrencyConversion.Domain.dll
