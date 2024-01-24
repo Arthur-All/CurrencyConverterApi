@@ -39,16 +39,12 @@ namespace CurrencyConversion.Application.Services
         {
             try
             {
-                var checkExchangeValidation = await _currencyRepo.checkExchangeRateValidation(currencyFrom, currencyTo);
-
-                if (checkExchangeValidation.CurrencyFrom == currencyFrom && checkExchangeValidation.CurrencyTo == currencyTo) return checkExchangeValidation.ValueOutPut;
-
                 var currenciesRate = await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
 
                 var InputToBaseRate = currenciesRate.InputToBaseRate;
                 var BaseToOutputRate = currenciesRate.BaseToOutputRate;
                 decimal baseAmount = value / InputToBaseRate;
-                decimal outputAmount = baseAmount * BaseToOutputRate;
+                decimal outputAmount = Math.Round(baseAmount * BaseToOutputRate, 2);
 
                 await saveCalculation(value, currencyFrom, currencyTo, outputAmount);
 
