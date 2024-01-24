@@ -1,4 +1,5 @@
-﻿using CurrencyConversion.Application.Interface;
+﻿using CurrencyConversion.Application.Helper;
+using CurrencyConversion.Application.Interface;
 using CurrencyConversion.Domain.DTOs;
 using CurrencyConversion.Infra.Interface;
 
@@ -7,26 +8,23 @@ namespace CurrencyConversion.Application.Services
     public class CurrencyRateService : ICurrencyRateService
     {
         private readonly ICurrencyRepository _currencyRepo;
+        private readonly CurrencyConverterHelper _converterHelper;
 
-        public CurrencyRateService(ICurrencyRepository currencyRepo)
+        public CurrencyRateService(ICurrencyRepository currencyRepo, CurrencyConverterHelper converterHelper)
         {
             _currencyRepo = currencyRepo;
-        }
-
-        public CurrencyRateService()
-        {
+            _converterHelper = converterHelper;
+            
         }
 
         public async Task<IEnumerable<ExchangeRatesDto>> GetAllCurrencyRateAsync()
         {
             return await _currencyRepo.GetAllCurrencyRateAsync();
         }
-
-
-        //public async Task<IEnumerable<ExchangeRatesDto>> TEST(string currencyFrom, string currencyTo)
-        //{
-        //    return await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
-        //}
+        public async Task<RatesDto> GetCurrencieRate(string currencyFrom, string currencyTo)
+        {
+           return  await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
+        }
 
         /// <summary>
         /// Converts an input amount from one currency to another using exchange rates.
@@ -39,12 +37,9 @@ namespace CurrencyConversion.Application.Services
         {
             try
             {
-                var currenciesRate = await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
+                var currenciesRate = await GetCurrencieRate(currencyFrom, currencyTo);
 
-                var InputToBaseRate = currenciesRate.InputToBaseRate;
-                var BaseToOutputRate = currenciesRate.BaseToOutputRate;
-                decimal baseAmount = value / InputToBaseRate;
-                decimal outputAmount = Math.Round(baseAmount * BaseToOutputRate, 2);
+                decimal outputAmount = await _converterHelper.ConvertCurrency(value, currenciesRate.InputToBaseRate, currenciesRate.BaseToOutputRate);
 
                 await saveCalculation(value, currencyFrom, currencyTo, outputAmount);
 
@@ -54,8 +49,13 @@ namespace CurrencyConversion.Application.Services
             catch (Exception ex) { throw ex; }
         }
 
-        private async Task<bool> saveCalculation(decimal valueFrom, string currencyFrom, string currencyTo, decimal outputAmount)
+        public async Task<bool> saveCalculation(decimal valueFrom, string currencyFrom, string currencyTo, decimal outputAmount)
         {
+            var TempExchangeRateCalculation = await _currencyRepo.ExchangeRateCalculationTemp(valueFrom, currencyFrom, currencyTo);
+
+            if (!IsSameCurrency(TempExchangeRateCalculation, valueFrom, currencyFrom, currencyTo))
+                return true;
+
             var tempRate = new tempExchangeRatesDto
             {
                 ValueFrom = valueFrom,
@@ -66,25 +66,11 @@ namespace CurrencyConversion.Application.Services
 
             return await _currencyRepo.saveCalculation(tempRate);
         }
-
-        private async Task<tempExchangeRatesDto?> checkExchangeRateValidation(string currencyFrom, string currencyTo)
+        private bool IsSameCurrency(ConvertCurrencyDto tempExchangeRateCalculation, decimal valueFrom, string currencyFrom, string currencyTo)
         {
-            try
-            {
-                var success = await _currencyRepo.checkExchangeRateValidation(currencyFrom, currencyTo);
-
-                var checkExchangeRate = new tempExchangeRatesDto
-                {
-                    ValueFrom = success.ValueFrom,
-                    CurrencyFrom = success.CurrencyFrom,
-                    CurrencyTo = success.CurrencyTo,
-                    ValueOutPut = success.ValueOutPut,
-                    Date = success.Date,
-                };
-                return checkExchangeRate;
-
-            }
-            catch (Exception ex) { throw ex; }
+            return tempExchangeRateCalculation.Value == valueFrom
+                && tempExchangeRateCalculation.CurrencyFrom.ToString() == currencyFrom
+                && tempExchangeRateCalculation.CurrencyTo.ToString() == currencyTo;
         }
     }
 }

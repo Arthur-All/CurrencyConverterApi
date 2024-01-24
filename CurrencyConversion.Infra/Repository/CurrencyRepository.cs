@@ -22,6 +22,7 @@ namespace CurrencyConversion.Infra.Repository
                                                         ELSE 3
                                                     END;";
         private readonly string ExchangeRateValidation = @"SELECT  ValueFrom, CurrencyFrom, CurrencyTo, ValueOutPut, Date FROM Rates WHERE CurrencyFrom = @CurrencyFrom AND CurrencyTo = @CurrencyTo;";
+
         #endregion
 
         private readonly IDbConnection _connection;
@@ -36,11 +37,10 @@ namespace CurrencyConversion.Infra.Repository
         {
             return await _connection.QueryAsync<ExchangeRatesDto>(GetAllCurrency);
         }
-        public async Task<RatesDto> GetCurrencieRate(string currencyFrom, string currencyTo)
+        public async Task<RatesDto?> GetCurrencieRate(string currencyFrom, string currencyTo)
         {
             var ratesList = await _connection.QueryAsync<decimal>(GetCurrenciesRates, new { currencyFrom, currencyTo });
 
-            // Assuming ratesList contains two decimal values
             var ratesDto = new RatesDto
             {
                 InputToBaseRate = ratesList.ElementAtOrDefault(0),
@@ -63,11 +63,10 @@ namespace CurrencyConversion.Infra.Repository
             var success = await _context.SaveChangesAsync();
             return success > 0;
         }
-        public async Task<tempExchangeRatesDto?> checkExchangeRateValidation(string currencyFrom, string currencyTo)
+        public async Task<ConvertCurrencyDto?> ExchangeRateCalculationTemp(decimal valueFrom, string currencyFrom, string currencyTo)
         {
 
-            var success =  await _connection.QueryFirstOrDefaultAsync<tempExchangeRatesDto?>(ExchangeRateValidation, new { currencyFrom, currencyTo });
-            return success;
+            return  await _connection.QueryFirstOrDefaultAsync<ConvertCurrencyDto?>(ExchangeRateValidation, new { currencyFrom, currencyTo });
 
         }
     }

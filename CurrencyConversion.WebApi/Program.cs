@@ -1,4 +1,6 @@
+using CurrencyConversion.Application;
 using CurrencyConversion.Application.Extensions;
+using CurrencyConversion.Application.Helper;
 using CurrencyConversion.Application.Interface;
 using CurrencyConversion.Application.Services;
 using CurrencyConversion.Infra.Context;
@@ -12,8 +14,12 @@ using static CurrencyConversion.Application.Options;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-// Add services to the container.
+// Add services to the container.\
+builder.Services.AddScoped<Options>();
 builder.Services.AddScoped<CurrencyRateService>();
+builder.Services.AddScoped<CurrencyFallbackHelper>();
+builder.Services.AddScoped<CurrencyConverterHelper>();
+builder.Services.AddScoped<CachingCurrencyRateService>();
 builder.Services.AddScoped<ICurrencyRateService, CachingCurrencyRateService>();
 
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
