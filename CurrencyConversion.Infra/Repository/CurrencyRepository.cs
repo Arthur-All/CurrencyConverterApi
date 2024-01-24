@@ -11,7 +11,7 @@ namespace CurrencyConversion.Infra.Repository
     public class CurrencyRepository : ICurrencyRepository
     {
         #region Dapper
-        private const string GetAllCurrency = @"SELECT Rate FROM ExchangeRates";
+        private const string GetAllCurrency = @"SELECT Rate FROM ExchangeRates;";
         private const string GetCurrenciesRates = @"
                                                     SELECT Rate
                                                     FROM ExchangeRates
@@ -21,11 +21,12 @@ namespace CurrencyConversion.Infra.Repository
                                                         WHEN @currencyTo THEN 2
                                                         ELSE 3
                                                     END;";
+        private readonly string ExchangeRateValidation = @"SELECT  ValueFrom, CurrencyFrom, CurrencyTo, ValueOutPut, Date FROM Rates WHERE CurrencyFrom = @CurrencyFrom AND CurrencyTo = @CurrencyTo;";
         #endregion
 
         private readonly IDbConnection _connection;
         private readonly AppDbContext _context;
-        public CurrencyRepository(AppDbContext context, IConfiguration configuration) 
+        public CurrencyRepository(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
             _connection = _connection.AddConnection(configuration);
@@ -61,6 +62,13 @@ namespace CurrencyConversion.Infra.Repository
             _context.Rates.Add(tempRate);
             var success = await _context.SaveChangesAsync();
             return success > 0;
+        }
+        public async Task<tempExchangeRatesDto?> checkExchangeRateValidation(string currencyFrom, string currencyTo)
+        {
+
+            var success =  await _connection.QueryFirstOrDefaultAsync<tempExchangeRatesDto?>(ExchangeRateValidation, new { currencyFrom, currencyTo });
+            return success;
+
         }
     }
 }

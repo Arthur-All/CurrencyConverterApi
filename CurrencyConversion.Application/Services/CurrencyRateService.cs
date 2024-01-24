@@ -1,8 +1,6 @@
 ﻿using CurrencyConversion.Application.Interface;
 using CurrencyConversion.Domain.DTOs;
-using CurrencyConversion.Domain.Entites;
 using CurrencyConversion.Infra.Interface;
-using System.Collections.Generic;
 
 namespace CurrencyConversion.Application.Services
 {
@@ -41,6 +39,10 @@ namespace CurrencyConversion.Application.Services
         {
             try
             {
+                var checkExchangeValidation = await _currencyRepo.checkExchangeRateValidation(currencyFrom, currencyTo);
+
+                if (checkExchangeValidation.CurrencyFrom == currencyFrom && checkExchangeValidation.CurrencyTo == currencyTo) return checkExchangeValidation.ValueOutPut;
+
                 var currenciesRate = await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
 
                 var InputToBaseRate = currenciesRate.InputToBaseRate;
@@ -56,7 +58,7 @@ namespace CurrencyConversion.Application.Services
             catch (Exception ex) { throw ex; }
         }
 
-        public async Task<bool> saveCalculation(decimal valueFrom, string currencyFrom, string currencyTo, decimal outputAmount)
+        private async Task<bool> saveCalculation(decimal valueFrom, string currencyFrom, string currencyTo, decimal outputAmount)
         {
             var tempRate = new tempExchangeRatesDto
             {
@@ -65,8 +67,28 @@ namespace CurrencyConversion.Application.Services
                 CurrencyTo = currencyTo,
                 ValueOutPut = outputAmount,
             };
-            
+
             return await _currencyRepo.saveCalculation(tempRate);
+        }
+
+        private async Task<tempExchangeRatesDto?> checkExchangeRateValidation(string currencyFrom, string currencyTo)
+        {
+            try
+            {
+                var success = await _currencyRepo.checkExchangeRateValidation(currencyFrom, currencyTo);
+
+                var checkExchangeRate = new tempExchangeRatesDto
+                {
+                    ValueFrom = success.ValueFrom,
+                    CurrencyFrom = success.CurrencyFrom,
+                    CurrencyTo = success.CurrencyTo,
+                    ValueOutPut = success.ValueOutPut,
+                    Date = success.Date,
+                };
+                return checkExchangeRate;
+
+            }
+            catch (Exception ex) { throw ex; }
         }
     }
 }
