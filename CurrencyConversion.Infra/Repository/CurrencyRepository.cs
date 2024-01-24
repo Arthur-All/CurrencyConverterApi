@@ -1,4 +1,5 @@
 ﻿using CurrencyConversion.Domain.DTOs;
+using CurrencyConversion.Domain.Entites;
 using CurrencyConversion.Infra.Context;
 using CurrencyConversion.Infra.Interface;
 using Dapper;
@@ -12,13 +13,14 @@ namespace CurrencyConversion.Infra.Repository
         #region Dapper
         private const string GetAllCurrency = @"SELECT Rate FROM ExchangeRates";
         private const string GetCurrenciesRates = @"
-                                                SELECT * FROM ExchangeRates 
-                                                WHERE Currency in (@currencyFrom, @currencyTo) 
-                                                ORDER BY CASE Currency
-                                                    WHEN @currencyFrom THEN 1
-                                                    WHEN @currencyTo THEN 2
-                                                    ELSE 3
-                                                END;"; 
+                                                    SELECT Rate
+                                                    FROM ExchangeRates
+                                                    WHERE Currency in (@currencyFrom, @currencyTo)
+                                                    ORDER BY CASE Currency
+                                                        WHEN @currencyFrom THEN 1
+                                                        WHEN @currencyTo THEN 2
+                                                        ELSE 3
+                                                    END;";
         #endregion
 
         private readonly IDbConnection _connection;
@@ -35,8 +37,30 @@ namespace CurrencyConversion.Infra.Repository
         }
         public async Task<RatesDto> GetCurrencieRate(string currencyFrom, string currencyTo)
         {
-            var t = (RatesDto)await _connection.QueryAsync<RatesDto>(GetCurrenciesRates, new { currencyFrom, currencyTo });
-            return t;    
+            var ratesList = await _connection.QueryAsync<decimal>(GetCurrenciesRates, new { currencyFrom, currencyTo });
+
+            // Assuming ratesList contains two decimal values
+            var ratesDto = new RatesDto
+            {
+                InputToBaseRate = ratesList.ElementAtOrDefault(0),
+                BaseToOutputRate = ratesList.ElementAtOrDefault(1)
+            };
+
+            return ratesDto;
+        }
+        public async Task<bool> saveCalculation(tempExchangeRatesDto tempExchange)
+        {
+            var tempRate = new Rates
+            {
+                ValueFrom = tempExchange.ValueFrom,
+                CurrencyFrom = tempExchange.CurrencyFrom,
+                CurrencyTo = tempExchange.CurrencyTo,
+                ValueOutPut = tempExchange.ValueOutPut,
+                Date = DateTime.Now
+            };
+            _context.Rates.Add(tempRate);
+            var success = await _context.SaveChangesAsync();
+            return success > 0;
         }
     }
 }

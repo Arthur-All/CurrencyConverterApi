@@ -34,11 +34,11 @@ namespace CurrencyConversion.WebApi.Controllers
 
         [HttpGet("CurrencyConverter")]
 
-        public ActionResult<decimal> ConvertCurrency(decimal value, CurrenciesEnum currencyFrom, CurrenciesEnum currencyTo)
+        public async Task<ActionResult<decimal>> ConvertCurrency(decimal value, CurrenciesEnum currencyFrom, CurrenciesEnum currencyTo)
         {
             try
             {
-                return Ok( _currencyrate.ConvertCurrency(value,  currencyFrom.ToString(),  currencyTo.ToString()));
+                return Ok( await _currencyrate.ConvertCurrency(value,  currencyFrom.ToString(),  currencyTo.ToString()));
             }
             catch (Exception ex) { throw ex; }
         }

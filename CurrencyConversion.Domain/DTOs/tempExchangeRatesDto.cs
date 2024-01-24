@@ -1,8 +1,7 @@
-﻿namespace CurrencyConversion.Domain.Entites
+﻿namespace CurrencyConversion.Domain.DTOs
 {
-    public class Rates
+    public class tempExchangeRatesDto
     {
-        public int Id { get; set; }
         public decimal ValueFrom { get; set; }
         public string CurrencyFrom { get; set; }
         public string CurrencyTo { get; set; }

@@ -1,5 +1,6 @@
 ﻿using CurrencyConversion.Application.Interface;
 using CurrencyConversion.Domain.DTOs;
+using CurrencyConversion.Domain.Entites;
 using CurrencyConversion.Infra.Interface;
 using System.Collections.Generic;
 
@@ -38,12 +39,34 @@ namespace CurrencyConversion.Application.Services
         /// <returns>Converted amount in the output currency</returns>
         public async Task<decimal> ConvertCurrency(decimal value, string currencyFrom, string currencyTo)
         {
-            var currenciesRate =  _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
-            var InputToBaseRate = 1;
-            var BaseToOutputRate = 1;
-            decimal baseAmount = value / InputToBaseRate;
-            decimal outputAmount = baseAmount * BaseToOutputRate;
-            return outputAmount;
+            try
+            {
+                var currenciesRate = await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
+
+                var InputToBaseRate = currenciesRate.InputToBaseRate;
+                var BaseToOutputRate = currenciesRate.BaseToOutputRate;
+                decimal baseAmount = value / InputToBaseRate;
+                decimal outputAmount = baseAmount * BaseToOutputRate;
+
+                await saveCalculation(value, currencyFrom, currencyTo, outputAmount);
+
+                return outputAmount;
+
+            }
+            catch (Exception ex) { throw ex; }
+        }
+
+        public async Task<bool> saveCalculation(decimal valueFrom, string currencyFrom, string currencyTo, decimal outputAmount)
+        {
+            var tempRate = new tempExchangeRatesDto
+            {
+                ValueFrom = valueFrom,
+                CurrencyFrom = currencyFrom,
+                CurrencyTo = currencyTo,
+                ValueOutPut = outputAmount,
+            };
+            
+            return await _currencyRepo.saveCalculation(tempRate);
         }
     }
 }
