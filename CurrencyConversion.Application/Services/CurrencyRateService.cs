@@ -21,9 +21,9 @@ namespace CurrencyConversion.Application.Services
         {
             return await _currencyRepo.GetAllCurrencyRateAsync();
         }
-        public async Task<RatesDto> GetCurrencieRate(string currencyFrom, string currencyTo)
+        public async Task<RatesDto?> GetCurrencieRate(string currencyFrom, string currencyTo)
         {
-           return  await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
+            return await _currencyRepo.GetCurrencieRate(currencyFrom, currencyTo);
         }
 
         /// <summary>

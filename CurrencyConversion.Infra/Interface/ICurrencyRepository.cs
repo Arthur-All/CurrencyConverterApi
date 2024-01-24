@@ -7,6 +7,6 @@ namespace CurrencyConversion.Infra.Interface
         Task<IEnumerable<ExchangeRatesDto>> GetAllCurrencyRateAsync();
         Task<bool> saveCalculation(tempExchangeRatesDto tempExchange);
         Task<RatesDto?> GetCurrencieRate(string currencyFrom, string currencyTo);
-        Task<ConvertCurrencyDto?> ExchangeRateCalculationTemp(decimal valueFrom, string currencyFrom, string currencyTo);
+        Task<ConvertCurrencyDto> ExchangeRateCalculationTemp(decimal valueFrom, string currencyFrom, string currencyTo);
     }
 }

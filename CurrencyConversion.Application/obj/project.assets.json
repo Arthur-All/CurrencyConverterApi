@@ -2166,5 +2166,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\arthu\\OneDrive\\Área de Trabalho\\Desafio-Currency\\CurrencyConversion.Application\\obj\\project.nuget.cache : Found invalid data while decoding."
+    }
+  ]
 }

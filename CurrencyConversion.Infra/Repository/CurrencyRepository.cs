@@ -11,7 +11,7 @@ namespace CurrencyConversion.Infra.Repository
     public class CurrencyRepository : ICurrencyRepository
     {
         #region Dapper
-        private const string GetAllCurrency = @"SELECT Rate FROM ExchangeRates;";
+        private const string GetAllCurrency = @"SELECT Currency, Rate FROM ExchangeRates;";
         private const string GetCurrenciesRates = @"
                                                     SELECT Rate
                                                     FROM ExchangeRates

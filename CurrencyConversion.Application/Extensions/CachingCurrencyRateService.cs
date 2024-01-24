@@ -22,16 +22,18 @@ namespace CurrencyConversion.Application.Extensions
             _currencyFallbackHelper = currencyFallbackHelper;
 
         }
-
-        public async Task<RatesDto> GetCurrencieRate(string currencyFrom, string currencyTo)
+        //rates = await _decorated.GetCurrencieRate(currencyFrom, currencyTo);
+        //I need to add the if(null) call=>FallBack
+        /* if (rates == null)*/
+        public async Task<RatesDto?> GetCurrencieRate(string currencyFrom, string currencyTo)
         {
             var cacheKey = $"{currencyFrom}-{currencyTo}";
             RatesDto rates;
             if (!_cache.TryGetValue(cacheKey, out rates))
             {
-                rates = await _decorated.GetCurrencieRate(currencyFrom, currencyTo);
-                //I need to add the if(null) call=>FallBack
-                _cache.Set(cacheKey, rates);
+                await _currencyFallbackHelper.BackupCurrencyRates();
+                rates = await _currencyFallbackHelper.GetBackupCurrencyRate(currencyFrom, currencyTo);
+               _cache.Set(cacheKey, rates);
             }
             return await _cache.GetOrCreateAsync(cacheKey, entry =>
             {
@@ -48,8 +50,8 @@ namespace CurrencyConversion.Application.Extensions
 
             if (!_cache.TryGetValue(cacheKey, out outputAmount))
             {
-                var currenciesRate = await _decorated.GetCurrencieRate(currencyFrom, currencyTo); //old
-                var currenciesRate2 = GetCurrencieRate(currencyFrom, currencyTo);
+                var currenciesRate = await GetCurrencieRate(currencyFrom, currencyTo);
+
                 // Get the exchange rates from the currenciesRate object
                 decimal inputToBaseRate = currenciesRate.InputToBaseRate;
                 decimal baseToOutputRate = currenciesRate.BaseToOutputRate;

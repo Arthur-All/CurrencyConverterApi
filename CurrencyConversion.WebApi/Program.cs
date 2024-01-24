@@ -7,7 +7,6 @@ using CurrencyConversion.Infra.Context;
 using CurrencyConversion.Infra.Interface;
 using CurrencyConversion.Infra.Repository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Text.Json.Serialization;
 using static CurrencyConversion.Application.Options;
 
@@ -24,9 +23,10 @@ builder.Services.AddScoped<ICurrencyRateService, CachingCurrencyRateService>();
 
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 
+builder.Services.Configure<WebApiOptions>(configuration.GetSection("WebApi"));
 builder.Services.Configure<CachingOptions>(configuration.GetSection("Caching"));
+builder.Services.Configure<FallbackOptions>(configuration.GetSection("Fallback"));
 builder.Services.AddMemoryCache();
-
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

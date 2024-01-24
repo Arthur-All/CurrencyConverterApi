@@ -24,5 +24,12 @@
     "C:\\Users\\arthu\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\arthu\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\arthu\\OneDrive\\Área de Trabalho\\Desafio-Currency\\CurrencyConversion.Domain\\obj\\project.nuget.cache : Found invalid data while decoding."
+    }
+  ]
 }
